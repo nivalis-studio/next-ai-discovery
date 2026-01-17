@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server.js';
 import { normalizePathname } from './pathname.js';
-import type { NextFetchEvent, NextRequest } from 'next/server';
+import type { NextFetchEvent, NextRequest } from 'next/server.js';
 
 export type MarkdownRewriteType = 'accept' | 'dotmd';
 
@@ -67,14 +67,25 @@ export const createMarkdownProxy = (options: MarkdownProxyOptions = {}) => {
   const enableAcceptNegotiation = options.enableAcceptNegotiation ?? true;
   const acceptHeader = options.acceptHeader ?? DEFAULT_MARKDOWN_ACCEPT;
 
+  const endpointPrefix = endpointPath.startsWith('/')
+    ? endpointPath
+    : `/${endpointPath}`;
+
+  const shouldSkipRequest = (request: NextRequest) =>
+    request.method !== 'GET' && request.method !== 'HEAD';
+
+  const isInternalEndpoint = (pathname: string) =>
+    pathname === endpointPrefix || pathname.startsWith(`${endpointPrefix}/`);
+
   return (request: NextRequest, _event: NextFetchEvent) => {
-    if (request.method !== 'GET' && request.method !== 'HEAD') {
+    if (shouldSkipRequest(request)) {
       return NextResponse.next();
     }
 
     const pathname = request.nextUrl.pathname;
 
-    if (shouldExcludePath(pathname, options)) {
+    // Avoid rewrite loops: the internal endpoint must never be rewritten.
+    if (isInternalEndpoint(pathname) || shouldExcludePath(pathname, options)) {
       return NextResponse.next();
     }
 

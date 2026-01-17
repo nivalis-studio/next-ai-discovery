@@ -1,5 +1,5 @@
 import { normalizePathname } from './pathname.js';
-import type { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server.js';
 
 export type MarkdownContent = {
   body: string;
@@ -60,9 +60,11 @@ export const createMarkdownRoute = (options: MarkdownRouteOptions) => {
 
     try {
       const content = await options.getMarkdown(pathname, request);
+      const isHead = request.method === 'HEAD';
+
       if (!content) {
         options.onServed?.({ pathname, status: 404 });
-        return new Response('Not Found', {
+        return new Response(isHead ? null : 'Not Found', {
           status: 404,
           headers: DEFAULT_HEADERS,
         });
@@ -71,7 +73,7 @@ export const createMarkdownRoute = (options: MarkdownRouteOptions) => {
       const body = buildBody(content, includeFrontmatter);
       options.onServed?.({ pathname, status: 200 });
 
-      return new Response(body, {
+      return new Response(isHead ? null : body, {
         status: 200,
         headers: DEFAULT_HEADERS,
       });

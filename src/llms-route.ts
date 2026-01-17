@@ -1,5 +1,5 @@
 import { renderLlmsTxt } from './llms.js';
-import type { NextRequest } from 'next/server';
+import type { NextRequest } from 'next/server.js';
 import type { LlmsTxtConfig, LlmsTxtProvider, LlmsTxtVariant } from './llms.js';
 
 export type LlmsTxtRouteOptions =

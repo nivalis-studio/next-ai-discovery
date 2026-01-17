@@ -32,6 +32,7 @@
 	},
 	"dependencies": {},
 	"peerDependencies": {
+		"next": "^16",
 		"typescript": "^5"
 	},
 	"devDependencies": {
@@ -47,7 +48,10 @@
 		"typescript": "5.9.3",
 		"zshy": "0.7.0"
 	},
-	"zshy": "./src/index.ts",
+	"zshy": {
+		"exports": "./src/index.ts",
+		"noEdit": true
+	},
 	"files": ["dist"],
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",

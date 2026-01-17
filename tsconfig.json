@@ -6,7 +6,7 @@
 		"module": "ESNext",
 		"moduleDetection": "force",
 		"jsx": "react-jsx",
-		"types": ["node", "next"],
+		"types": ["node", "next", "bun-types"],
 		"allowJs": true,
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
