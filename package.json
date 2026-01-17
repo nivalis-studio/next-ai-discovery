@@ -1,0 +1,53 @@
+{
+  "name": "niv-md-geo",
+  "description": "@nivalis/template",
+  "type": "module",
+  "version": "0.1.0",
+  "license": "MIT",
+  "packageManager": "bun@1.3.5",
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/nivalis-studio/@nivalis/template#readme",
+  "repository": {
+    "url": "git+https://github.com/nivalis-studio/@nivalis/template.git"
+  },
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "test": "bun test",
+    "build": "bunx zshy",
+    "prepack": "bunx zshy",
+    "prepare": "bunx lefthook install",
+    "ts": "tsc --noEmit --incremental"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.11",
+    "@commitlint/cli": "20.3.1",
+    "@commitlint/config-conventional": "20.3.1",
+    "@nivalis/biome-config": "2.3.11",
+    "@total-typescript/ts-reset": "0.6.1",
+    "@types/bun": "1.3.5",
+    "@types/node": "24.2.0",
+    "lefthook": "2.0.13",
+    "typescript": "5.9.3",
+    "zshy": "0.7.0"
+  },
+  "zshy": "./src/index.ts",
+  "files": ["dist"],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.cts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  }
+}
